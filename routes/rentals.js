@@ -1,6 +1,6 @@
-const {Rental, validate} = require('../models/rental');
-const {Movie} = require('../models/movie');
-const {Customer} = require('../models/customer');
+const { Rental, validate } = require('../models/rental');
+const { Movie } = require('../models/movie');
+const { Customer } = require('../models/customer');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
@@ -11,7 +11,7 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/', async (req, res) => {
-  const { error } = validate(req.body); 
+  const { error } = validate(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
   const customer = await Customer.findById(req.body.customerId);
@@ -64,7 +64,7 @@ router.post('/', async (req, res) => {
 //     });
 
 //   if (!rental) return res.status(404).send('The rental with the given ID was not found.');
-  
+
 //   res.send(rental);
 // });
 
