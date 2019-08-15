@@ -1,6 +1,7 @@
+const moment = require('moment');
 const { Rental, validate } = require('../models/rental');
-const { Movie } = require('../models/movie');
-const { Customer } = require('../models/customer');
+// const { Movie } = require('../models/movie');
+// const { Customer } = require('../models/customer');
 const auth = require('../middleware/auth');
 const mongoose = require('mongoose');
 const express = require('express');
@@ -18,7 +19,13 @@ router.post('/', auth, async (req, res) => {
 
     if (!rental) return res.status(404).send('Rental not found');
 
-    if (rental.dateReturned) return res.status(400).send('Rental is already processed');
+    if (rental.dateReturned) return res.status(400).send('Return is already processed');
+
+    rental.dateReturned = new Date();
+    const rentalDays = moment().diff(rental.dateOut, 'days'); 
+    rental.rentalFee = rentalDays * rental.movie.dailyRentalRate;
+
+    await rental.save();
 
     res.status(200).send('valid rental');
 });
