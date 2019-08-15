@@ -43,39 +43,6 @@ router.post('/', async (req, res) => {
   res.send(rental);
 });
 
-// router.put('/:id', async (req, res) => {
-//   const { error } = validate(req.body); 
-//   if (error) return res.status(400).send(error.details[0].message);
-
-//   const genre = await Genre.findById(req.body.genreId);
-//   if (!genre) return res.status(400).send('Invalid genre.');
-
-//   const rental = await Rental.findByIdAndUpdate(req.params.id,
-//     { title: req.body.title,
-//       genre: {
-//         _id: genre._id,
-//         name: genre.name
-//       },
-//       numberInStock: req.body.numberInStock,
-//       dailyRentalRate: req.body.dailyRentalRate
-//      },
-//     {
-//       new: true
-//     });
-
-//   if (!rental) return res.status(404).send('The rental with the given ID was not found.');
-
-//   res.send(rental);
-// });
-
-// router.delete('/:id', async (req, res) => {
-//   const rental = await Rental.findByIdAndRemove(req.params.id);
-
-//   if (!rental) return res.status(404).send('The rental with the given ID was not found.');
-
-//   res.send(rental);
-// });
-
 router.get('/:id', async (req, res) => {
   const rental = await Rental.findById(req.params.id);
 
