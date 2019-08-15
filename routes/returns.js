@@ -11,14 +11,17 @@ router.post('/', auth, async (req, res) => {
     const { error } = validate(req.body);
     if (error) return res.status(400).send(error.details[0].message);
 
-    let rental = Rental.find({
-        customerId: req.body.customerId,
-        movieId: req.body.movieId
+    const rental = await Rental.findOne({
+        'customer._id': req.body.customerId,
+        'movie._id': req.body.movieId
     });
 
-    if (!rental) return res.status(404).send('No rental found');
+    if (!rental) return res.status(404).send('Rental not found');
 
-    res.send(200);
+    if (rental.dateReturned) return res.status(400).send('Rental is already processed');
+
+    res.status(200).send('valid rental');
 });
 
 module.exports = router;
+
