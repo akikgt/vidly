@@ -51,8 +51,6 @@ describe('/api/returns', () => {
         await Movie.remove({});
     });
 
-
-
     const exec = async () => {
         return await request(server)
             .post('/api/returns')
